@@ -16,5 +16,6 @@ namespace MathBot.Model.DatabaseModels
         public TestType Type { get; set; }
         public int? Count { get; set; } = 0;
         public int? RightAnswers { get; set; } = 0;
+        public bool IsStoped  { get; set; } = false;
     }
 }

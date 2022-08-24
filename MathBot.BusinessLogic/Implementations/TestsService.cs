@@ -30,15 +30,15 @@ namespace MathBot.BusinessLogic.Implementations
             try
             {
                 User user = _usersService.GetByTelegramId(ChatId); //(y => y.StartTime <= DateTime.UtcNow.AddSeconds(20)) != null) 
-            
-                if (_context.Tests.Any(x => x.UserId == user.Id))
+
+                if (_context.Tests.Where(x => x.UserId == user.Id).Where(s => s.Type == TestType.Test).OrderByDescending(t => t.StartTime).FirstOrDefault() != null)
                 {
                     DateTime startime = _context.Tests.Where(x => x.UserId == user.Id).Where(s => s.Type == TestType.Test).OrderByDescending(t => t.StartTime).FirstOrDefault().StartTime;
                     if (DateTime.UtcNow <= startime.AddSeconds(20)) isActiveTest = true;
                     Console.WriteLine("----Start time = "+startime.ToString());
                 }
             }
-            catch (System.NullReferenceException e) { Console.WriteLine("In (_context.Tests.Where(x => x.UserId == user.Id) there are no tests"); }
+            catch { Console.WriteLine("In (_context.Tests.Where(x => x.UserId == user.Id) there are no tests"); }
             Console.WriteLine("isActiveTest = " + isActiveTest);
             return isActiveTest;
         }
@@ -49,7 +49,7 @@ namespace MathBot.BusinessLogic.Implementations
             User user = _usersService.GetByTelegramId(ChatId);
             try
             {
-                if (_context.Tests.Any(x => x.UserId == user.Id))
+                if (_context.Tests.Where(x => x.UserId == user.Id).Where(s => s.Type == TestType.Production).OrderByDescending(t => t.StartTime).FirstOrDefault()!=null)
                 {
                     DateTime startime = _context.Tests.Where(x => x.UserId == user.Id).Where(s => s.Type == TestType.Production).OrderByDescending(t => t.StartTime).FirstOrDefault().StartTime;
                     if (DateTime.UtcNow <= startime.AddMinutes(1)) isActiveProduction = true;
@@ -98,6 +98,24 @@ namespace MathBot.BusinessLogic.Implementations
         public void AddRightAnswer(Test test)
         {
             test.RightAnswers++;
+            _context.SaveChanges();
+        }
+
+        public bool TestIsEnd(long ChatId)
+        {
+            //bool isEnd=false;
+            //Test test = GetLastTest(ChatId);
+            //return (!IsRunningTest(ChatId) && !IsRunningProduction(ChatId) || GetLastTest(ChatId).IsStoped);
+           //if (test.Type == TestType.Test) isEnd = !IsRunningTest(ChatId) || test.IsStoped;
+            //if (test.Type == TestType.Production) isEnd= !IsRunningProduction(ChatId) || test.IsStoped;
+            
+            return GetLastTest(ChatId).IsStoped;
+        }
+
+        public void StopTest(long ChatId)
+        {
+            Test test = GetLastTest(ChatId);
+            test.IsStoped = true;
             _context.SaveChanges();
         }
 

@@ -20,5 +20,9 @@ namespace MathBot.BusinessLogic.Interfaces
         void AddCounts(Test test);
 
         void AddRightAnswer(Test test);
+
+        bool TestIsEnd(long ChatId);
+
+        void StopTest(long ChatId);
     }
 }

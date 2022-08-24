@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathBot.Api", "MathBot.Api.csproj", "{B184867E-0B62-4418-9073-10DC5C112C40}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Api", "1.Api", "{D2F7C171-8ACE-46F5-8994-E867FF6FB043}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Business Logic", "2. Business Logic", "{560050E3-D947-4932-B80D-B8EF7E1B761A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Model", "3. Model", "{128CE05D-60E7-4180-A3FA-84797F3C5487}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Common", "4. Common", "{BEDA726F-7B69-4D87-AE3E-E622568C55E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathBot.BusinessLogic", "..\MathBot.BusinessLogic\MathBot.BusinessLogic.csproj", "{1B46FDB0-C4AA-4465-8221-8475B15603AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathBot.Model", "..\MathBot.Model\MathBot.Model.csproj", "{71B5C6B3-9A9D-46A4-84D6-E4E2B4D2263F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathBot.Common", "..\MathBot.Common\MathBot.Common.csproj", "{F7916B3B-E7C2-4793-BAF3-85103017976D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B184867E-0B62-4418-9073-10DC5C112C40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B184867E-0B62-4418-9073-10DC5C112C40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B184867E-0B62-4418-9073-10DC5C112C40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B184867E-0B62-4418-9073-10DC5C112C40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B46FDB0-C4AA-4465-8221-8475B15603AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B46FDB0-C4AA-4465-8221-8475B15603AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B46FDB0-C4AA-4465-8221-8475B15603AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B46FDB0-C4AA-4465-8221-8475B15603AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71B5C6B3-9A9D-46A4-84D6-E4E2B4D2263F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71B5C6B3-9A9D-46A4-84D6-E4E2B4D2263F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71B5C6B3-9A9D-46A4-84D6-E4E2B4D2263F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71B5C6B3-9A9D-46A4-84D6-E4E2B4D2263F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7916B3B-E7C2-4793-BAF3-85103017976D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7916B3B-E7C2-4793-BAF3-85103017976D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7916B3B-E7C2-4793-BAF3-85103017976D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7916B3B-E7C2-4793-BAF3-85103017976D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B184867E-0B62-4418-9073-10DC5C112C40} = {D2F7C171-8ACE-46F5-8994-E867FF6FB043}
+		{1B46FDB0-C4AA-4465-8221-8475B15603AC} = {560050E3-D947-4932-B80D-B8EF7E1B761A}
+		{71B5C6B3-9A9D-46A4-84D6-E4E2B4D2263F} = {128CE05D-60E7-4180-A3FA-84797F3C5487}
+		{F7916B3B-E7C2-4793-BAF3-85103017976D} = {BEDA726F-7B69-4D87-AE3E-E622568C55E6}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {00C4DBCA-88BF-46BF-AF8A-6A5ED855D991}
+	EndGlobalSection
+EndGlobal

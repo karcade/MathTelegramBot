@@ -171,7 +171,10 @@ namespace MathBot.Api.Controllers
                     _usersService.AddTest(message.Chat.Id, test);
 
                     await StopTestKeyboard(bot, message);
-                    
+
+                   // await CheckTimeForTest(message, bot);
+
+
                     await CallBetaTest(message, bot);
                 }
                 else bot.SendTextMessageAsync(chatId: message.Chat.Id, text: "Солнышко, тест уже запущен 😑");
@@ -187,14 +190,14 @@ namespace MathBot.Api.Controllers
 
         public async Task CallBetaTest(Message message, ITelegramBotClient bot)
         {
-            await bot.DeleteMessageAsync(chatId: message.Chat.Id, messageId: (message.MessageId-1)); //////&&&&&&&&&&&&&&&
+            //await bot.DeleteMessageAsync(chatId: message.Chat.Id, messageId: (message.MessageId - 1)); //////&&&&&&&&&&&&&&&
 
             var test = _testsService.GetLastTest(message.Chat.Id);
             if (DateTime.UtcNow <= test.StartTime.AddSeconds(20) || _testsService.TestIsEnd(message.Chat.Id))
             {
                 _testsService.AddCounts(test);
 
-                Console.WriteLine("!!!!!!!!!!!!New iteration " + test.StartTime.ToString() + " end at " + test.StartTime.AddSeconds(20) + " now: " + DateTime.UtcNow);
+                //Console.WriteLine("!!!!!!!!!!!!New iteration " + test.StartTime.ToString() + " end at " + test.StartTime.AddSeconds(20) + " now: " + DateTime.UtcNow);
 
                 var exercise = _exercisesService.Create(test.Id);
                 _testsService.AddExercise(test, exercise);
@@ -211,9 +214,10 @@ namespace MathBot.Api.Controllers
             {
                 //await bot.DeleteMessageAsync(chatId: message.Chat.Id, messageId: (message.MessageId - 1));
                 await bot.SendTextMessageAsync(chatId: message.Chat.Id, text: $"Пробный тест закончен");
-
+               
                 await StartTestAgain(bot, message);
-            }
+            } 
+            //await bot.DeleteMessageAsync(chatId: message.Chat.Id, messageId: (message.MessageId-1)); //////
 
             return;
         }
@@ -229,6 +233,8 @@ namespace MathBot.Api.Controllers
                     TestType type = TestType.Production;
                     Test test = _testsService.Create(message.Chat.Id, startTime, type); //Create(int testId, DateTime startTime, TestType type)//chatId need???
                     _usersService.AddTest(message.Chat.Id, test);
+
+                    await StopTestKeyboard(bot, message);
 
                     await CallProductionTest(message, bot);
                 }
@@ -301,6 +307,8 @@ namespace MathBot.Api.Controllers
         public async Task CheckTimeForTest(Message message, ITelegramBotClient bot)
         {
             var test = _testsService.GetLastTest(message.Chat.Id);
+            while (true)
+            { 
 
             if(test.Type == TestType.Test)
             {
@@ -310,7 +318,7 @@ namespace MathBot.Api.Controllers
             if (test.Type == TestType.Test)
             {
                 if (!(DateTime.UtcNow <= test.StartTime.AddMinutes(1) || !_testsService.TestIsEnd(message.Chat.Id))) _testsService.StopTest(message.Chat.Id);
-            }
+            }}
         }
 
 
@@ -420,7 +428,7 @@ namespace MathBot.Api.Controllers
             _exercisesService.PutUserAnswer(exercise, i);
             await CheckAnswer(bot, message.Chat.Id);
 
-            await bot.DeleteMessageAsync(chatId: message.Chat.Id, messageId: message.MessageId);
+            await bot.DeleteMessageAsync(chatId: message.Chat.Id, messageId: message.MessageId); /////
 
             if (test.Type == TestType.Test) await CallBetaTest(message, bot);
             if (test.Type == TestType.Production) await CallProductionTest(message, bot);

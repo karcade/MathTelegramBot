@@ -55,6 +55,11 @@ namespace MathBot.Api.Controllers
                 await Register(bot, message);
             }
 
+            if (message.Text.ToLower() == "/help")
+            {
+                await Help(bot, message);
+            }
+
             if (message.Text.ToLower() == "/register")
             {
                 await Register(bot, message);
@@ -96,7 +101,7 @@ namespace MathBot.Api.Controllers
 
         static async Task<Message> Help(ITelegramBotClient botClient, Message message)
         {
-            const string functionsString = "/start_test - начать тест";
+            const string functionsString = "/start_test - начать тест 👨‍🎓\n/register - зарегистрироваться 🕵️‍♀️";
 
             return await botClient.SendTextMessageAsync(chatId: message.Chat.Id,
                                                         text: functionsString);
@@ -186,6 +191,8 @@ namespace MathBot.Api.Controllers
         public async Task StopTest(Message message, ITelegramBotClient bot)
         {
             _testsService.StopTest(message.Chat.Id);
+            await StartTestAgain(bot, message);
+
         }
 
         public async Task CallBetaTest(Message message, ITelegramBotClient bot)
@@ -208,11 +215,15 @@ namespace MathBot.Api.Controllers
                 {
                     numbersValue.Add(number.Value);
                 }
+
+                if(test.Count > 2) await bot.DeleteMessageAsync(chatId: message.Chat.Id, messageId: (message.MessageId-1)); //////
+
                 await GetTestInlineKeyboard(message, bot, numbersValue);
             }
             else
             {
-                //await bot.DeleteMessageAsync(chatId: message.Chat.Id, messageId: (message.MessageId - 1));
+                await bot.DeleteMessageAsync(chatId: message.Chat.Id, messageId: (message.MessageId - 1)); ///
+
                 await bot.SendTextMessageAsync(chatId: message.Chat.Id, text: $"Пробный тест закончен");
                
                 await StartTestAgain(bot, message);
@@ -238,7 +249,7 @@ namespace MathBot.Api.Controllers
 
                     await CallProductionTest(message, bot);
                 }
-                else bot.SendTextMessageAsync(chatId: message.Chat.Id, text: "Солнышко, тест уже запущен 😑");
+                else bot.SendTextMessageAsync(chatId: message.Chat.Id, text: "Солнце, тест уже запущен 😑");
             }
             
             return;
@@ -261,11 +272,15 @@ namespace MathBot.Api.Controllers
                 {
                     numbersValue.Add(number.Value);
                 }
+
+                if (test.Count > 2) await bot.DeleteMessageAsync(chatId: message.Chat.Id, messageId: (message.MessageId - 1)); //////
+
                 await GetTestInlineKeyboard(message, bot, numbersValue);
             }
             else
             {
                 await bot.SendTextMessageAsync(chatId: message.Chat.Id, text: $"Результаты теста: {test.RightAnswers} из {test.Count}");
+                await bot.DeleteMessageAsync(chatId: message.Chat.Id, messageId: (message.MessageId - 1)); //////
 
                 await StartTestAgain(bot, message);
             }
@@ -429,6 +444,7 @@ namespace MathBot.Api.Controllers
             await CheckAnswer(bot, message.Chat.Id);
 
             await bot.DeleteMessageAsync(chatId: message.Chat.Id, messageId: message.MessageId); /////
+            //await bot.DeleteMessageAsync(chatId: message.Chat.Id, messageId: message.MessageId-1);
 
             if (test.Type == TestType.Test) await CallBetaTest(message, bot);
             if (test.Type == TestType.Production) await CallProductionTest(message, bot);
